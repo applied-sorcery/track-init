@@ -9,9 +9,10 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import Header from './components/Header.js';
-import SearchNBuild from './components/SearchNBuild.js';
-import HomeScreen from './components/HomeScreen.js';
-import MonsterInfo from './components/MonsterInfo.js';
+import SearchView from './components/SearchView.js';
+import HomeView from './components/HomeView.js';
+import MonsterStatsView from './components/MonsterStatsView.js';
+import CombatView from './components/CombatView.js';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -21,9 +22,10 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home" headerMode="none">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Search" component={SearchNBuild} />
-        <Stack.Screen name="Info" component={MonsterInfo} />
+        <Stack.Screen name="Home" component={HomeView} />
+        <Stack.Screen name="Search" component={SearchView} />
+        <Stack.Screen name="Info" component={MonsterStatsView} />
+        <Stack.Screen name="Combat" component={CombatView} />
       </Stack.Navigator>
     </NavigationContainer>
   );
