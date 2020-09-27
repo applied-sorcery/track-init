@@ -30,6 +30,7 @@ const Styles = StyleSheet.create({
     borderWidth: 4,
     borderColor: 'white',
   },
+  ListItemText: {color: '#c85c5c'},
   searchTextInput: {
     flex: 1,
     marginLeft: 10,

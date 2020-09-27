@@ -14,27 +14,38 @@ import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import SearchView from './components/SearchView.js';
 import HomeView from './components/HomeView.js';
-import SettingsView from './components/SettingsView.js'
+import SettingsView from './components/SettingsView.js';
+import InstructionsView from './components/InstructionsView.js';
 import MonsterStatsView from './components/MonsterStatsView.js';
 import CombatView from './components/CombatView.js';
-import {bottomTabNavigator} from '@react-navigation/native';
+import {
+  bottomTabNavigator,
+  NavigationContainer,
+} from '@react-navigation/native';
 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Styles from './Style.js';
 
 const Tab = createBottomTabNavigator();
 
-function Tabs() {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeView} />
-      <Tab.Screen name="Settings" component={SettingsView} />
-    </Tab.Navigator>
-  );
-}
-
 const App = () => {
   return (
-    
+    <NavigationContainer>
+      <Tab.Navigator
+        initialRouteName="Home"
+        tabBarOptions={{
+          activeTintColor: 'white',
+          inactiveTintColor: Styles.defaultText.color,
+          activeBackgroundColor: Styles.container.backgroundColor,
+          inactiveBackgroundColor: Styles.container.backgroundColor,
+        }}>
+        <Tab.Screen name="Home" component={HomeView} />
+        <Tab.Screen name="Settings" component={SettingsView} />
+        <Tab.Screen name="Instructions" component={InstructionsView} />
+        <Tab.Screen name="Combat" component={CombatView} />
+        <Tab.Screen name="Search" component={SearchView} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 };
 
