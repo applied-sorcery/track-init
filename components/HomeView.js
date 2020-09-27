@@ -22,18 +22,6 @@ const HomeView = ({navigation}) => (
       Add combatatants to your list by searching the D&D API or by importing
       your own.
     </Text>
-    <View style={Styles.buttonView}>
-      <Button
-        style={Styles.button}
-        color={Styles.button.color}
-        title="Import"
-      />
-      <Button
-        color="#3f1818"
-        title="Search"
-        onPress={() => navigation.navigate('Search')}
-      />
-    </View>
   </View>
 );
 

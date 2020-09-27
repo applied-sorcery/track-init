@@ -9,9 +9,9 @@ const Styles = StyleSheet.create({
   container: {
     backgroundColor: '#2f363c',
     flex: 1,
-    borderColor: 'red',
-    borderWidth: 3,
-    borderStyle: 'solid',
+    // borderColor: 'red',
+    // borderWidth: 3,
+    // borderStyle: 'solid',
   },
   safeArea: {
     height: 30,
@@ -27,8 +27,8 @@ const Styles = StyleSheet.create({
   },
   listArea: {
     flex: 3,
-    borderWidth: 4,
-    borderColor: 'white',
+    // borderWidth: 4,
+    // borderColor: 'white',
   },
   ListItemText: {color: '#c85c5c'},
   searchTextInput: {

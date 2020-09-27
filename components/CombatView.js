@@ -17,6 +17,15 @@ import Styles from '../Style';
 const baseUrl = 'http://dnd5eapi.co';
 
 const CombatView = ({navigation, renderItem, combatants}) => {
+  //mock data:
+  const [combatants, setCombatants] = useState([
+    [
+      {id: '1', name: 'tim'},
+      {id: '2', name: 'katie'},
+      {id: '3', name: 'todd'},
+      {id: '4', name: 'sarah'},
+    ],
+  ]);
   return (
     <View style={Styles.container}>
       <Text style={Styles.defaultText}>This is the combat view</Text>
