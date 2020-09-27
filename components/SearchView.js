@@ -140,13 +140,7 @@ const SearchView = ({navigation}) => {
           keyboardShouldPersistTaps="always"
         />
       </View>
-      <View style={Styles.buttonView}>
-        <Button
-          title="Next"
-          color={Styles.button.color}
-          onPress={() => navigation.push('Combat')}
-        />
-      </View>
+      <View style={Styles.buttonView}></View>
     </View>
   );
 };
