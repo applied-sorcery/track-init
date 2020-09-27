@@ -23,7 +23,11 @@ const HomeView = ({navigation}) => (
       your own.
     </Text>
     <View style={Styles.buttonView}>
-      <Button style={Styles.button} color="#3f1818" title="Import" />
+      <Button
+        style={Styles.button}
+        color={Styles.button.color}
+        title="Import"
+      />
       <Button
         color="#3f1818"
         title="Search"

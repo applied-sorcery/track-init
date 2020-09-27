@@ -1,5 +1,9 @@
 /*to-do:
- -add color corresponding to alignment
+ -add color corresponding to 
+ -add navigation drawer
+ -add list to combat screen
+ -stick a button to the bottom of the "my mobs" list
+ -make the "my mobs" list take up 100% of the screen
 */
 
 // import uuid from 'react-native-uuid';
@@ -8,7 +12,6 @@
 
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
-import Header from './components/Header.js';
 import SearchView from './components/SearchView.js';
 import HomeView from './components/HomeView.js';
 import MonsterStatsView from './components/MonsterStatsView.js';
@@ -30,47 +33,5 @@ const App = () => {
     </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#2f363c',
-    flex: 1,
-  },
-  searchView: {
-    paddingRight: 15,
-    flexDirection: 'row',
-    backgroundColor: '#251c1c',
-    borderBottomWidth: 4,
-    borderBottomColor: '#3d2e2e',
-    height: 64,
-    alignItems: 'center',
-    borderRadius: 40,
-  },
-  searchTextInput: {
-    flex: 1,
-    marginLeft: 10,
-    fontSize: 22,
-    padding: 10,
-    color: 'white',
-  },
-
-  monsterListHeader: {
-    flexDirection: 'row',
-    marginTop: 40,
-  },
-
-  searchResultsList: {},
-
-  monsterList: {
-    backgroundColor: '#fff',
-  },
-
-  MonsterListView: {
-    flex: 1,
-    backgroundColor: 'pink',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default App;

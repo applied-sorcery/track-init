@@ -19,24 +19,26 @@ const ListItem = ({item, addItem, removeItem, onInfoPress}) => {
     <TouchableOpacity style={styles.listItem}>
       <View style={styles.listItemView}>
         <Text style={styles.listItemText}>{item.name} </Text>
-        <TouchableOpacity>
-          <Icon
-            name="info"
-            size={24}
-            color="#fff"
-            onPress={() => onInfoPress(item.id)}
-          />
-        </TouchableOpacity>
-        <View style={styles.qtyView}>
-          <TouchableOpacity onPress={() => removeItem(item.id)}>
-            <Icon name="remove" size={24} color="#c85c5c" />
+        <View style={styles.right}>
+          <TouchableOpacity style={styles.infoIcon}>
+            <Icon
+              name="info"
+              size={18}
+              color="#fff"
+              onPress={() => onInfoPress(item.id)}
+            />
           </TouchableOpacity>
-          <Text style={{fontSize: 24, color: '#fff', marginHorizontal: 12}}>
-            {item.quantity}
-          </Text>
-          <TouchableOpacity onPress={() => addItem(item.id)}>
-            <Icon name="add" size={24} color="#c85c5c" />
-          </TouchableOpacity>
+          <View style={styles.qtyView}>
+            <TouchableOpacity onPress={() => removeItem(item.id)}>
+              <Icon name="remove" size={18} color="#c85c5c" />
+            </TouchableOpacity>
+            <Text style={{fontSize: 18, color: '#fff', marginHorizontal: 12}}>
+              {item.quantity}
+            </Text>
+            <TouchableOpacity onPress={() => addItem(item.id)}>
+              <Icon name="add" size={18} color="#c85c5c" />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </TouchableOpacity>
@@ -45,15 +47,26 @@ const ListItem = ({item, addItem, removeItem, onInfoPress}) => {
 
 const styles = StyleSheet.create({
   listItem: {
-    padding: 15,
+    padding: 5,
     backgroundColor: '#2f363c',
+    borderWidth: 4,
+    borderColor: 'blue',
   },
   listItemView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    borderWidth: 4,
+    borderColor: 'green',
   },
-  listItemText: {fontSize: 24, color: '#c85c5c'},
+  infoIcon: {
+    margin: 3,
+  },
+  right: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  listItemText: {fontSize: 22, color: '#c85c5c'},
   qtyView: {flexDirection: 'row', alignItems: 'center'},
 });
 

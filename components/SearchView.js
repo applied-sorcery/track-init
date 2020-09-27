@@ -92,43 +92,32 @@ const SearchView = ({navigation}) => {
       : monsters.filter((li) => li.name.match(new RegExp(searchTerm, 'i')));
 
   const renderCombatants = () => (
-    <View style={styles.monsterListView}>
-      <View style={styles.monsterListHeader}>
-        <Text style={{color: '#fff', fontSize: 35}}>My Mobs:</Text>
+    <View>
+      <View>
+        <Text style={Styles.defaultText}>My Mobs:</Text>
       </View>
       <FlatList
-        style={styles.searchResultsList}
         data={combatants}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        ListEmptyComponent={() => (
-          <Text
-            style={{
-              color: '#a8a8a8',
-              fontSize: 20,
-              margin: 50,
-              alignSelf: 'center',
-            }}>
-            {'<no mobs yet>'}
-          </Text>
-        )}
+        ListEmptyComponent={() => <Text>{'<no mobs yet>'}</Text>}
         keyboardShouldPersistTaps="always"
       />
     </View>
   );
 
   return (
-    <View style={styles.container}>
-      <SafeAreaView style={{backgroundColor: '#2f363c', height: 25}} />
-      <View style={styles.searchView}>
+    <View style={Styles.container}>
+      <SafeAreaView style={Styles.safeArea} />
+      <View style={Styles.searchView}>
         <TouchableOpacity onPress={clearSearchTerm}>
           <Icon name="arrow-back" color="#fff" size={26} />
         </TouchableOpacity>
         <TextInput
+          style={Styles.searchTextInput}
           value={searchTerm}
           placeholderTextColor={'#fff'}
           placeholder="Search for combatants to add..."
-          style={styles.searchTextInput}
           onChangeText={onSearchInput}
           keyboardType="visible-password"
           multiline={false}
@@ -142,9 +131,8 @@ const SearchView = ({navigation}) => {
         ) : null}
       </View>
 
-      <View style={styles.monsterListView}>
+      <View style={Styles.listArea}>
         <FlatList
-          style={styles.searchResultsList}
           data={getListData()}
           renderItem={renderItem}
           keyExtractor={(item) => item.name}
@@ -155,54 +143,12 @@ const SearchView = ({navigation}) => {
       <View style={Styles.buttonView}>
         <Button
           title="Next"
-          color="3F1818"
+          color={Styles.button.color}
           onPress={() => navigation.push('Combat')}
         />
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#2f363c',
-    flex: 1,
-  },
-  searchView: {
-    paddingRight: 15,
-    flexDirection: 'row',
-    backgroundColor: '#251c1c',
-    borderBottomWidth: 4,
-    borderBottomColor: '#3d2e2e',
-    height: 64,
-    alignItems: 'center',
-    borderRadius: 40,
-  },
-  searchTextInput: {
-    flex: 1,
-    marginLeft: 10,
-    fontSize: 22,
-    padding: 10,
-    color: 'white',
-  },
-
-  monsterListHeader: {
-    flexDirection: 'row',
-    marginTop: 40,
-  },
-
-  searchResultsList: {},
-
-  monsterList: {
-    backgroundColor: '#fff',
-  },
-
-  MonsterListView: {
-    flex: 1,
-    backgroundColor: 'pink',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default SearchView;
