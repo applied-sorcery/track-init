@@ -18,19 +18,16 @@ const baseUrl = 'http://dnd5eapi.co';
 
 const CombatView = ({navigation, renderItem, combatants}) => {
   //mock data:
-  const [testData, settestData] = useState([
-    [
-      {id: '1', name: 'tim'},
-      {id: '2', name: 'katie'},
-      {id: '3', name: 'todd'},
-      {id: '4', name: 'sarah'},
-    ],
-  ]);
+  const [index, setIndex] = useState();
+  const combatants = useSelector((state) => {
+    state.combatants;
+  });
+
   return (
     <View style={Styles.container}>
       <Text style={Styles.defaultText}>This is the combat view</Text>
       <FlatList
-        data={testData}
+        data={combatants}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         ListEmptyComponent={() => <Text>{'<no mobs yet>'}</Text>}
