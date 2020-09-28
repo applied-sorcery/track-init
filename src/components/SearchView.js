@@ -10,30 +10,28 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
-import uuid from 'react-native-uuid';
 import ListItem from './ListItem.js';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import Styles from '../Style.js';
+import Styles from '../../Style.js';
+import {useDispatch, useSelector} from 'react-redux';
+import {addMonster, removeMonster, loadMonsters} from '../redux/reducer';
 
 const baseUrl = 'http://dnd5eapi.co';
 
 const SearchView = ({navigation}) => {
-  const [monsters, setMonsters] = useState([]);
+  const monsters = useSelector((state) => state.allMonsters);
+  const combatants = useSelector((state) => state.combatants);
+
   const [searchTerm, setSearchTerm] = useState('');
-  const [combatants, setCombatants] = useState([]);
-  const [filteredMonsters, setFilteredMonsters] = useState([]);
-  const [currentMonster, setCurrentMonster] = useState({});
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log(' * you are in useEffect()');
-
-    getDataFromApiAsync('http://dnd5eapi.co/api/monsters').then((result) =>
-      setMonsters((prevData) => {
-        return result.map((el) => ({...el, id: uuid.v4(), quantity: 0}));
-      }),
-    );
+    getDataFromApiAsync('http://dnd5eapi.co/api/monsters').then((result) => {
+      dispatch(loadMonsters(result));
+    });
   }, []);
 
   async function getDataFromApiAsync(url) {
@@ -53,29 +51,28 @@ const SearchView = ({navigation}) => {
     });
   };
 
-  const addMonster = (id) => {
-    setMonsters((prev) =>
-      prev.map((el) =>
-        el.id == id ? {...el, quantity: (el.quantity += 1)} : el,
-      ),
-    );
-    setCombatants((prev) => monsters.filter((el) => el.quantity > 0));
+  const onPlusPress = (id) => {
+    dispatch(addMonster(id));
   };
 
-  const removeMonster = (id) => {
-    setMonsters((prev) =>
-      prev.map((el) =>
-        el.id == id ? {...el, quantity: (el.quantity -= 1)} : el,
-      ),
-    );
-    setCombatants((prev) => monsters.filter((el) => el.quantity > 0));
+  const onMinusPress = (id) => {
+    dispatch(removeMonster(id));
   };
+
+  // const removeMonster = (id) => {
+  //   setMonsters((prev) =>
+  //     prev.map((el) =>
+  //       el.id == id ? {...el, quantity: (el.quantity -= 1)} : el,
+  //     ),
+  //   );
+  //   setCombatants((prev) => monsters.filter((el) => el.quantity > 0));
+  // };
 
   const renderItem = ({item}) => (
     <ListItem
       item={item}
-      addItem={addMonster}
-      removeItem={removeMonster}
+      addItem={() => onPlusPress(item.id)}
+      removeItem={() => onMinusPress(item.id)}
       onInfoPress={onInfoPress}
     />
   );

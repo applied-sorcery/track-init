@@ -12,13 +12,13 @@ import {
 } from 'react-native';
 import ListItem from './ListItem.js';
 
-import Styles from '../Style';
+import Styles from '../../Style';
 
 const baseUrl = 'http://dnd5eapi.co';
 
 const CombatView = ({navigation, renderItem, combatants}) => {
   //mock data:
-  const [combatants, setCombatants] = useState([
+  const [testData, settestData] = useState([
     [
       {id: '1', name: 'tim'},
       {id: '2', name: 'katie'},
@@ -30,7 +30,7 @@ const CombatView = ({navigation, renderItem, combatants}) => {
     <View style={Styles.container}>
       <Text style={Styles.defaultText}>This is the combat view</Text>
       <FlatList
-        data={combatants}
+        data={testData}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         ListEmptyComponent={() => <Text>{'<no mobs yet>'}</Text>}

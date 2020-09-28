@@ -14,7 +14,7 @@ import {
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import Styles from '../Style';
+import Styles from '../../Style';
 
 const HomeView = ({navigation}) => (
   <View style={Styles.container}>
