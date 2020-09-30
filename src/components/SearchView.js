@@ -88,21 +88,6 @@ const SearchView = ({navigation}) => {
       ? null
       : monsters.filter((li) => li.name.match(new RegExp(searchTerm, 'i')));
 
-  const renderCombatants = () => (
-    <View>
-      <View>
-        <Text style={Styles.defaultText}>My Mobs:</Text>
-      </View>
-      <FlatList
-        data={combatants}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        ListEmptyComponent={() => <Text>{'<no mobs yet>'}</Text>}
-        keyboardShouldPersistTaps="always"
-      />
-    </View>
-  );
-
   return (
     <View style={Styles.container}>
       <SafeAreaView style={Styles.safeArea} />
