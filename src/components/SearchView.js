@@ -22,13 +22,11 @@ const baseUrl = 'http://dnd5eapi.co';
 
 const SearchView = ({navigation}) => {
   const monsters = useSelector((state) => state.allMonsters);
-  const combatants = useSelector((state) => state.combatants);
 
   const [searchTerm, setSearchTerm] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(' * you are in useEffect()');
     getDataFromApiAsync('http://dnd5eapi.co/api/monsters').then((result) => {
       dispatch(loadMonsters(result));
     });
@@ -58,15 +56,6 @@ const SearchView = ({navigation}) => {
   const onMinusPress = (id) => {
     dispatch(removeMonster(id));
   };
-
-  // const removeMonster = (id) => {
-  //   setMonsters((prev) =>
-  //     prev.map((el) =>
-  //       el.id == id ? {...el, quantity: (el.quantity -= 1)} : el,
-  //     ),
-  //   );
-  //   setCombatants((prev) => monsters.filter((el) => el.quantity > 0));
-  // };
 
   const renderItem = ({item}) => (
     <ListItem

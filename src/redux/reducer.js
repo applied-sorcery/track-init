@@ -1,12 +1,15 @@
 import uuid from 'react-native-uuid';
 
 //Action Type
-export const ADD_1 = 'ADD_1';
+export const ADD_MONSTER = 'ADD_MONSTER';
 export const REMOVE_MONSTER = 'REMOVE_MONSTER';
 export const LOAD_MONSTERS = 'LOAD_MONSTERS';
 
 //Action Creator
-export const addMonster = (monsterId) => ({type: ADD_1, payload: monsterId});
+export const addMonster = (monsterId) => ({
+  type: ADD_MONSTER,
+  payload: monsterId,
+});
 
 export const loadMonsters = (monsterList) => ({
   type: LOAD_MONSTERS,
@@ -22,8 +25,8 @@ const initialState = {allMonsters: [], combatants: []};
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_1:
-      console.log('ADD_1', state.allMonsters[0]);
+    case ADD_MONSTER:
+      console.log('ADD_MONSTER', state.allMonsters[0]);
       let newMonsters = state.allMonsters.map((monster) =>
         monster.id == action.payload
           ? {...monster, quantity: (monster.quantity += 1)}
