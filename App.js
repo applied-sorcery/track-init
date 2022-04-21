@@ -16,6 +16,7 @@ import {
   Text,
   useColorScheme,
   View,
+  Button,
 } from 'react-native';
 
 import {
@@ -94,9 +95,13 @@ const App: () => Node = () => {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Button>Create New Combat</Button>
-          <Button>Saved Combats</Button>
-          <Button>Combatants</Button>
+          <View style={styles.buttonViewStyle}>
+            <Button style={styles.buttonStyle} title="new">
+              Create New Combat
+            </Button>
+            <Button title="Combats">Saved Combats</Button>
+            <Button title="combatants">Combatants</Button>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -104,6 +109,14 @@ const App: () => Node = () => {
 };
 
 const styles = StyleSheet.create({
+  buttonStyle: {
+    margin: '50',
+    padding: '15',
+    width: '10%',
+  },
+  buttonViewStyle: {
+    justifyContent: 'space-between',
+  },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
