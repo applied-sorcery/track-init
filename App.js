@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import type {Node} from 'react';
 import {
   SafeAreaView,
@@ -53,6 +53,53 @@ II) groups screen:
 
  */
 
+const CombatScreen = () => {
+  //set screen state to CombatantsScreen
+  return (
+    <View>
+      <Text>Combat Screen</Text>>
+    </View>
+  );
+};
+const CombatantsScreen = () => {
+  //set screen state to CombatantsScreen
+  return (
+    <View>
+      <Text>Combatant Screen</Text>>
+    </View>
+  );
+};
+
+const HomeScreen = props => {
+  const onCombatPress = () => {
+    //set screen state to CombatScreen
+    props.setViewChild('combat screen');
+  };
+
+  const onCombatantsPress = () => {
+    //set screen state to CombatantsScreen
+    props.setCurrentView('combatants screen');
+  };
+
+  return (
+    <View
+      style={{
+        backgroundColor: props.isDarkMode ? Colors.black : Colors.white,
+      }}>
+      <View style={styles.buttonViewStyle}>
+        <Button style={styles.buttonStyle} title="new">
+          Create New Combat
+        </Button>
+        <Button title="Combats" onPress={() => onCombatPress()}>
+          Saved Combats
+        </Button>
+        <Button title="combatants " onPress={onCombatantsPress}>
+          Combatants
+        </Button>
+      </View>
+    </View>
+  );
+};
 // const Section = ({children, title}): Node => {
 //   const isDarkMode = useColorScheme() === 'dark';
 //   return (
@@ -80,10 +127,13 @@ II) groups screen:
 // };
 
 const App: () => Node = () => {
+  const [currentView, setCurrentView] = useState('home screen');
   const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+  const setViewChild = view => setCurrentView(view);
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
@@ -91,18 +141,13 @@ const App: () => Node = () => {
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         {/* <Header /> */}
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <View style={styles.buttonViewStyle}>
-            <Button style={styles.buttonStyle} title="new">
-              Create New Combat
-            </Button>
-            <Button title="Combats">Saved Combats</Button>
-            <Button title="combatants">Combatants</Button>
-          </View>
-        </View>
+        {currentView == 'home screen' ? (
+          <HomeScreen props={(isDarkMode, Colors, setViewChild)} />
+        ) : currentView == 'combat screen' ? (
+          <CombatScreen />
+        ) : currentView == 'combatants screen' ? (
+          <CombatantsScreen />
+        ) : null}
       </ScrollView>
     </SafeAreaView>
   );
