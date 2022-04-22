@@ -52,11 +52,12 @@ II) groups screen:
 
  */
 
-const CombatScreen = () => {
-  //set screen state to CombatantsScreen
+const CombatScreen = ({navigation, route}) => {
+  //set screen state to CombatScreen
   return (
     <View>
-      <Text>Combat Screen</Text>>
+      <Text>Combat Screen</Text>
+      {route.params.isNew ? <Text>combat is new</Text> : null}
     </View>
   );
 };
@@ -64,7 +65,7 @@ const CombatantsScreen = () => {
   //set screen state to CombatantsScreen
   return (
     <View>
-      <Text>Combatant Screen</Text>>
+      <Text>Combatant Screen</Text>
     </View>
   );
 };
@@ -73,15 +74,17 @@ const HomeScreen = ({navigation}) => {
   return (
     <View>
       <View>
-        <Button title="New">Create New Combat</Button>
+        <Button
+          title="New"
+          onPress={() => navigation.navigate('Combat', {isNew: true})}>
+          Create New Combat
+        </Button>
         <Button title="Combat" onPress={() => navigation.navigate('Combat')}>
           Saved Combats
         </Button>
         <Button
           title="Combatants"
-          onPress={() => navigation.navigate('Combatants')}>
-          Combatants
-        </Button>
+          onPress={() => navigation.navigate('Combatants')}></Button>
       </View>
     </View>
   );
@@ -95,6 +98,7 @@ const App: () => Node = () => {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Combatants" component={CombatantsScreen} />
+        <Stack.Screen name="Combat" component={CombatScreen} />
         {/* <Stack.Screen name="Notifications" component={Notifications} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Settings" component={Settings} /> */}
