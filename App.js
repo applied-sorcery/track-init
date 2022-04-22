@@ -17,6 +17,7 @@ import {
   useColorScheme,
   View,
   Button,
+  FlatList,
 } from 'react-native';
 
 import {
@@ -52,12 +53,39 @@ II) groups screen:
 
  */
 
+// const myCombatantsList = () => {
+//   return (
+
+//   );
+// };
+
 const CombatScreen = ({navigation, route}) => {
-  //set screen state to CombatScreen
+  const data = [
+    {id: 1, title: 'Black', description: ''},
+    {id: 2, title: 'Black', description: ''},
+    {id: 3, title: 'gold', description: ''},
+    {id: 4, title: 'yellow', description: ''},
+    {id: 5, title: 'turqouse', description: ''},
+  ];
+  const Item = ({title, description}) => (
+    <View>
+      <Text>{title} </Text>
+      <Text>{description} </Text>
+    </View>
+  );
+
+  const renderItem = ({item}) => (
+    <Item title={item.title} description={item.description} />
+  );
   return (
     <View>
-      <Text>Combat Screen</Text>
-      {route.params.isNew ? <Text>combat is new</Text> : null}
+      {data && (
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+        />
+      )}
     </View>
   );
 };
@@ -76,12 +104,12 @@ const HomeScreen = ({navigation}) => {
       <View>
         <Button
           title="New"
-          onPress={() => navigation.navigate('Combat', {isNew: true})}>
-          Create New Combat
-        </Button>
-        <Button title="Combat" onPress={() => navigation.navigate('Combat')}>
-          Saved Combats
-        </Button>
+          onPress={() => navigation.navigate('Combat', {isNew: true})}></Button>
+        <Button
+          title="Combat"
+          onPress={() =>
+            navigation.navigate('Combat', {isNew: false})
+          }></Button>
         <Button
           title="Combatants"
           onPress={() => navigation.navigate('Combatants')}></Button>
