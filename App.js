@@ -73,47 +73,28 @@ const HomeScreen = ({navigation}) => {
   return (
     <View>
       <View>
-        <Button title="new">Create New Combat</Button>
-        <Button title="Combats">Saved Combats</Button>
-        <Button title="combatants ">Combatants</Button>
+        <Button title="New">Create New Combat</Button>
+        <Button title="Combat" onPress={() => navigation.navigate('Combat')}>
+          Saved Combats
+        </Button>
+        <Button
+          title="Combatants"
+          onPress={() => navigation.navigate('Combatants')}>
+          Combatants
+        </Button>
       </View>
     </View>
   );
 };
-// const Section = ({children, title}): Node => {
-//   const isDarkMode = useColorScheme() === 'dark';
-//   return (
-//     <View style={styles.sectionContainer}>
-//       <Text
-//         style={[
-//           styles.sectionTitle,
-//           {
-//             color: isDarkMode ? Colors.white : Colors.black,
-//           },
-//         ]}>
-//         {title}
-//       </Text>
-//       <Text
-//         style={[
-//           styles.sectionDescription,
-//           {
-//             color: isDarkMode ? Colors.light : Colors.dark,
-//           },
-//         ]}>
-//         {children}
-//       </Text>
-//     </View>
-//   );
-// };
+
 const Stack = createStackNavigator();
 
 const App: () => Node = () => {
-  // const Stack = createNativeStackNavigator();
-
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Combatants" component={CombatantsScreen} />
         {/* <Stack.Screen name="Notifications" component={Notifications} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Settings" component={Settings} /> */}
@@ -121,29 +102,5 @@ const App: () => Node = () => {
     </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  buttonStyle: {
-    margin: '50',
-    padding: '15',
-    width: '10%',
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;
