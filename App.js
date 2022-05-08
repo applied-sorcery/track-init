@@ -15,6 +15,7 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
+  TouchableOpacity,
   Text,
   useColorScheme,
   View,
@@ -34,6 +35,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import DeleteIcon from './delete.svg';
+import {TextInput} from 'react-native-gesture-handler';
 
 /** 
 I) home screen
@@ -64,13 +66,24 @@ II) groups screen:
 // };
 
 const CombatScreen = ({navigation, route}) => {
-  const data = [
+  const [data, setData] = useState([
     {id: 1, title: 'Black', description: ''},
     {id: 2, title: 'Black', description: ''},
     {id: 3, title: 'gold', description: ''},
     {id: 4, title: 'yellow', description: ''},
     {id: 5, title: 'turqouse', description: ''},
-  ];
+  ]);
+  const [newCharName, setNewCharName] = useState('');
+  const onChangeText = text => {
+    setNewCharName(text);
+  };
+  const onAddListItem = () => {
+    setData([
+      ...data,
+      {title: newCharName + '', id: data.length + 3, description: ''},
+    ]);
+  };
+
   const Item = ({title, description}) => (
     <View>
       <View style={styles.itemView}>
@@ -87,6 +100,26 @@ const CombatScreen = ({navigation, route}) => {
   );
   return (
     <View>
+      <View style={styles.textInputView}>
+        <TextInput
+          onSubmitEditing={() => onSubmitEditing()}
+          onChangeText={text => onChangeText(text)}
+          placeholder={'Name'}
+        />
+        <TouchableOpacity
+          onPress={() => onAddListItem()}
+          style={[styles.button, styles.addBtn]}>
+          <Text style={styles.btnText}>Add</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.textInputView}>
+        <TouchableOpacity
+          onPress={() => startCombat()}
+          style={[styles.button, styles.combatBtn]}>
+          <Text style={styles.btnText}>Start Combat</Text>
+        </TouchableOpacity>
+      </View>
+
       {data && (
         <FlatList
           data={data}
@@ -110,17 +143,21 @@ const HomeScreen = ({navigation}) => {
   return (
     <View>
       <View style={styles.buttonView}>
-        <Button
-          title="New"
-          onPress={() => navigation.navigate('Combat', {isNew: true})}></Button>
-        <Button
-          title="Combat"
-          onPress={() =>
-            navigation.navigate('Combat', {isNew: false})
-          }></Button>
-        <Button
-          title="Combatants"
-          onPress={() => navigation.navigate('Combatants')}></Button>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('Combat', {isNew: true})}>
+          <Text style={styles.btnText}>New</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('Combat', {isNew: false})}>
+          <Text style={styles.btnText}>Combat</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('Combatants')}>
+          <Text style={styles.btnText}>Combatants</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -146,10 +183,30 @@ const App: () => Node = () => {
 export default App;
 
 const styles = StyleSheet.create({
-  buttonView: {},
-  button: {},
+  titleText: {marginLeft: 60},
+  combatBtn: {height: 30, margin: 10, padding: 2},
+  addBtn: {margin: 5, height: 30, padding: 0, width: 75},
+  buttonView: {display: 'flex', marginTop: 25},
+  btnText: {fontSize: 20, fontWeight: 'bold'},
+  button: {
+    alignItems: 'center',
+    marginLeft: 20,
+    padding: 10,
+    margin: 50,
+    width: 150,
+    backgroundColor: '#3ef77e',
+    borderRadius: 3,
+  },
   itemView: {flexDirection: 'row', justifyContent: 'space-between'},
-  textInput: {},
+  textInput: {width: 100},
   iconSVG: {width: 20, height: 20, marginRight: 10},
   container: {},
+  textInputView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // paddingRight: 50,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+  },
 });
