@@ -8,6 +8,8 @@
 import 'react-native-gesture-handler';
 import React, {useState} from 'react';
 import type {Node} from 'react';
+
+import {SvgUri} from 'react-native-svg';
 import {
   SafeAreaView,
   ScrollView,
@@ -30,6 +32,8 @@ import {
 import {NavigationContainer, StackActions} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createStackNavigator} from '@react-navigation/stack';
+
+import DeleteIcon from './delete.svg';
 
 /** 
 I) home screen
@@ -101,7 +105,8 @@ const CombatantsScreen = () => {
 const HomeScreen = ({navigation}) => {
   return (
     <View>
-      <View>
+      <DeleteIcon style={styles.iconSVG} />
+      <View style={styles.buttonView}>
         <Button
           title="New"
           onPress={() => navigation.navigate('Combat', {isNew: true})}></Button>
@@ -136,3 +141,11 @@ const App: () => Node = () => {
 };
 
 export default App;
+
+const styles = StyleSheet.create({
+  buttonView: {},
+  button: {},
+  textInput: {},
+  iconSVG: {width: 100, height: 100, borderWidth: 2},
+  container: {},
+});
