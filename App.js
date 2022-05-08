@@ -73,7 +73,11 @@ const CombatScreen = ({navigation, route}) => {
   ];
   const Item = ({title, description}) => (
     <View>
-      <Text>{title} </Text>
+      <View style={styles.itemView}>
+        <Text style={styles.titleText}>{title} </Text>
+        <DeleteIcon style={styles.iconSVG} />
+      </View>
+
       <Text>{description} </Text>
     </View>
   );
@@ -105,7 +109,6 @@ const CombatantsScreen = () => {
 const HomeScreen = ({navigation}) => {
   return (
     <View>
-      <DeleteIcon style={styles.iconSVG} />
       <View style={styles.buttonView}>
         <Button
           title="New"
@@ -145,7 +148,8 @@ export default App;
 const styles = StyleSheet.create({
   buttonView: {},
   button: {},
+  itemView: {flexDirection: 'row', justifyContent: 'space-between'},
   textInput: {},
-  iconSVG: {width: 100, height: 100, borderWidth: 2},
+  iconSVG: {width: 20, height: 20, marginRight: 10},
   container: {},
 });
