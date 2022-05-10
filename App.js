@@ -117,7 +117,7 @@ const CombatScreen = ({navigation, route}) => {
     />
   );
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.textInputView}>
         <TextInput
           onSubmitEditing={() => onSubmitEditing()}
@@ -126,15 +126,20 @@ const CombatScreen = ({navigation, route}) => {
         />
         <TouchableOpacity
           onPress={() => onAddListItem()}
-          style={[styles.button, styles.addBtn]}>
+          style={[styles.button, styles.menuBtn]}>
           <Text style={styles.btnText}>Add</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.textInputView}>
+      <View style={styles.combatControls}>
         <TouchableOpacity
           onPress={() => startCombat()}
-          style={[styles.button, styles.combatBtn]}>
-          <Text style={styles.btnText}>Start Combat</Text>
+          style={[styles.button, styles.menuBtn]}>
+          <Text style={styles.btnText}>Start</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => startCombat()}
+          style={[styles.button, styles.menuBtn]}>
+          <Text style={styles.btnText}>Edit</Text>
         </TouchableOpacity>
       </View>
 
@@ -195,7 +200,11 @@ const App: () => Node = () => {
           component={HomeScreen}
         />
         <Stack.Screen name="Combatants" component={CombatantsScreen} />
-        <Stack.Screen name="Combat" component={CombatScreen} />
+        <Stack.Screen
+          name="Combat"
+          options={{headerShown: false}}
+          component={CombatScreen}
+        />
         {/* <Stack.Screen name="Notifications" component={Notifications} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Settings" component={Settings} /> */}
@@ -208,8 +217,16 @@ export default App;
 
 const styles = StyleSheet.create({
   titleText: {marginLeft: 60},
+  combatMenu: {
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    borderColor: 'red',
+    borderWidth: 2,
+  },
   combatBtn: {height: 30, margin: 10, padding: 2},
-  addBtn: {
+  combatControls: {flexDirection: 'row', justifyContent: 'flex-end'},
+  menuBtn: {
     margin: 5,
     height: 30,
     padding: 0,
