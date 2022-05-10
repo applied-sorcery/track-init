@@ -80,17 +80,14 @@ const CombatScreen = ({navigation, route}) => {
   const onAddListItem = () => {
     setData([
       ...data,
-      {title: newCharName + '', id: data.length + 3, description: ''},
+      {title: newCharName + '', id: data.length + 7, description: ''},
     ]);
   };
 
-  const onDeleteListItem = id => {
-    // data.map(el => alert(el.id !== id));
-    let dataCopy = data;
-    setData(dataCopy.filter(el => el.id !== id));
-  };
-
   const onRemove = (id, e) => {
+    data.map((el, index) =>
+      alert('name: ' + el.title + '  | index: ' + index + ' :: el: ' + el.id),
+    );
     setData(data.filter(item => item.id !== id));
   };
 
