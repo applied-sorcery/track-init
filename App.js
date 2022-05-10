@@ -68,10 +68,10 @@ II) groups screen:
 const CombatScreen = ({navigation, route}) => {
   const [data, setData] = useState([
     {id: 1, title: 'Black', description: ''},
-    {id: 2, title: 'Black', description: ''},
-    {id: 3, title: 'gold', description: ''},
-    {id: 4, title: 'yellow', description: ''},
-    {id: 5, title: 'turqouse', description: ''},
+    {id: 2, title: 'Blue', description: ''},
+    {id: 3, title: 'Gold', description: ''},
+    {id: 4, title: 'Yellow', description: ''},
+    {id: 5, title: 'Turqouse', description: ''},
   ]);
   const [newCharName, setNewCharName] = useState('');
   const onChangeText = text => {
@@ -84,11 +84,23 @@ const CombatScreen = ({navigation, route}) => {
     ]);
   };
 
-  const Item = ({title, description}) => (
+  const onDeleteListItem = id => {
+    // data.map(el => alert(el.id !== id));
+    let dataCopy = data;
+    setData(dataCopy.filter(el => el.id !== id));
+  };
+
+  const onRemove = (id, e) => {
+    setData(data.filter(item => item.id !== id));
+  };
+
+  const Item = ({id, title, description, onRemove}) => (
     <View>
       <View style={styles.itemView}>
         <Text style={styles.titleText}>{title} </Text>
-        <DeleteIcon style={styles.iconSVG} />
+        <TouchableOpacity onPress={() => onRemove()}>
+          <DeleteIcon style={styles.iconSVG} />
+        </TouchableOpacity>
       </View>
 
       <Text>{description} </Text>
@@ -96,7 +108,13 @@ const CombatScreen = ({navigation, route}) => {
   );
 
   const renderItem = ({item}) => (
-    <Item title={item.title} description={item.description} />
+    <Item
+      initiative={item.init}
+      title={item.title}
+      description={item.description}
+      id={item.id}
+      onRemove={() => onRemove(item.id)}
+    />
   );
   return (
     <View>
@@ -141,13 +159,8 @@ const CombatantsScreen = () => {
 
 const HomeScreen = ({navigation}) => {
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.buttonView}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('Combat', {isNew: true})}>
-          <Text style={styles.btnText}>New</Text>
-        </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate('Combat', {isNew: false})}>
@@ -166,10 +179,21 @@ const HomeScreen = ({navigation}) => {
 const Stack = createStackNavigator();
 
 const App: () => Node = () => {
+  const [combats, setCombats] = useState([]);
+  const [combatants, setCombatants] = useState([]);
+
+  const setAnts = ants => {
+    setCombatants(ants);
+  };
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen
+          name="Home"
+          options={{headerShown: false}}
+          component={HomeScreen}
+        />
         <Stack.Screen name="Combatants" component={CombatantsScreen} />
         <Stack.Screen name="Combat" component={CombatScreen} />
         {/* <Stack.Screen name="Notifications" component={Notifications} />
@@ -185,22 +209,49 @@ export default App;
 const styles = StyleSheet.create({
   titleText: {marginLeft: 60},
   combatBtn: {height: 30, margin: 10, padding: 2},
-  addBtn: {margin: 5, height: 30, padding: 0, width: 75},
-  buttonView: {display: 'flex', marginTop: 25},
+  addBtn: {
+    margin: 5,
+    height: 30,
+    padding: 0,
+    width: 75,
+  },
+  buttonView: {
+    flex: 1,
+    maxHeight: 100,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    borderWidth: 2,
+    borderColor: 'red',
+  },
+
+  buttonView2: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    borderWidth: 2,
+  },
   btnText: {fontSize: 20, fontWeight: 'bold'},
   button: {
+    // flex: 1,
+    borderWidth: 2,
+    borderColor: 'black',
     alignItems: 'center',
-    marginLeft: 20,
+    marginLeft: 0,
     padding: 10,
-    margin: 50,
+    margin: 0,
     width: 150,
-    backgroundColor: '#3ef77e',
+    backgroundColor: '#aaa77e',
     borderRadius: 3,
   },
   itemView: {flexDirection: 'row', justifyContent: 'space-between'},
   textInput: {width: 100},
   iconSVG: {width: 20, height: 20, marginRight: 10},
-  container: {},
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: 'blue',
+  },
   textInputView: {
     flexDirection: 'row',
     alignItems: 'center',
