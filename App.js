@@ -224,12 +224,6 @@ const styles = StyleSheet.create({
     borderColor: 'red',
   },
 
-  buttonView2: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    borderWidth: 2,
-  },
   btnText: {fontSize: 20, fontWeight: 'bold'},
   button: {
     // flex: 1,
