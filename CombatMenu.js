@@ -11,11 +11,6 @@ const CombatMenu = ({styes}) => {
         style={[styles.button, styles.menuBtn]}>
         <Text style={styles.btnText}>Load</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => onSaveCombat()}
-        style={[styles.button, styles.menuBtn]}>
-        <Text style={styles.btnText}>Save</Text>
-      </TouchableOpacity>
     </View>
   </View>;
 };

@@ -5,6 +5,18 @@
  * @format
  * @flow strict-local
  */
+
+//logic:
+
+// start btn greyed if less than 2 combatants
+// edit btn greyed if less than 1 combatant
+// save btn greyed unless 2 combatants:
+//   save state:
+//    -combat status: in combat, paused, pre-combat, post-combat
+//    -combatants (+any stats)
+//    -round #
+//    -initiative info
+
 import 'react-native-gesture-handler';
 import React, {useState} from 'react';
 import type {Node} from 'react';
@@ -73,6 +85,9 @@ const CombatScreen = ({navigation, route}) => {
     {id: 4, title: 'Yellow', description: ''},
     {id: 5, title: 'Turqouse', description: ''},
   ]);
+  const [combatState, setCombatState] = useState();
+  const [editState, setEditState] = useState();
+
   const [newCharName, setNewCharName] = useState('');
   const onChangeText = text => {
     setNewCharName(text);
@@ -84,20 +99,45 @@ const CombatScreen = ({navigation, route}) => {
     ]);
   };
 
+  const onEditCombat = () => {
+    editState == 'editing' ? setEditState('noedit') : setEditState('editing');
+  };
+
   const onRemove = (id, e) => {
-    data.map((el, index) =>
-      alert('name: ' + el.title + '  | index: ' + index + ' :: el: ' + el.id),
-    );
+    // data.map((el, index) =>
+    //   alert('name: ' + el.title + '  | index: ' + index + ' :: el: ' + el.id),
+    // );
     setData(data.filter(item => item.id !== id));
+  };
+
+  const onStartCombat = () => {
+    // data.map((el, index) =>
+    //   alert('name: ' + el.title + '  | index: ' + index + ' :: el: ' + el.id),
+    // );
+    setCombatState('in combat');
+  };
+
+  const onReset = () => {
+    setData([
+      {id: 1, title: 'Black', description: ''},
+      {id: 2, title: 'Blue', description: ''},
+      {id: 3, title: 'Gold', description: ''},
+      {id: 4, title: 'Yellow', description: ''},
+      {id: 5, title: 'Turqouse', description: ''},
+    ]);
   };
 
   const Item = ({id, title, description, onRemove}) => (
     <View>
       <View style={styles.itemView}>
-        <Text style={styles.titleText}>{title} </Text>
-        <TouchableOpacity onPress={() => onRemove()}>
-          <DeleteIcon style={styles.iconSVG} />
-        </TouchableOpacity>
+        <Text style={styles.titleText}>
+          {title !== '' ? title : 'dummy fighter'}{' '}
+        </Text>
+        {editState == 'editing' ? (
+          <TouchableOpacity onPress={() => onRemove()}>
+            <DeleteIcon style={styles.iconSVG} />
+          </TouchableOpacity>
+        ) : null}
       </View>
 
       <Text>{description} </Text>
@@ -113,40 +153,76 @@ const CombatScreen = ({navigation, route}) => {
       onRemove={() => onRemove(item.id)}
     />
   );
+
+  const FlatListItemSeparator = () => {
+    return <View style={styles.listSeparator} />;
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.textInputView}>
-        <TextInput
-          onSubmitEditing={() => onSubmitEditing()}
-          onChangeText={text => onChangeText(text)}
-          placeholder={'Name'}
-        />
-        <TouchableOpacity
-          onPress={() => onAddListItem()}
-          style={[styles.button, styles.menuBtn]}>
-          <Text style={styles.btnText}>Add</Text>
-        </TouchableOpacity>
-      </View>
       <View style={styles.combatControls}>
         <TouchableOpacity
-          onPress={() => startCombat()}
+          onPress={() => onStartCombat()}
           style={[styles.button, styles.menuBtn]}>
           <Text style={styles.btnText}>Start</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => startCombat()}
+          onPress={() => onEditCombat()}
           style={[styles.button, styles.menuBtn]}>
-          <Text style={styles.btnText}>Edit</Text>
+          {editState == 'editing' ? (
+            <Text style={styles.btnText}>Editing...</Text>
+          ) : (
+            <Text style={styles.btnText}>Edit</Text>
+          )}
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => onSaveCombat()}
+          style={[styles.button, styles.menuBtn]}>
+          <Text style={styles.btnText}>Save</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, styles.menuBtn]}
+          onPress={() => onReset()}>
+          <Text style={styles.btnText}>Reset</Text>
         </TouchableOpacity>
       </View>
-
-      {data && (
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-        />
-      )}
+      <View style={styles.spacer}></View>
+      {editState == 'editing' ? (
+        <View style={styles.textInputView}>
+          <TextInput
+            style={styles.textInput}
+            onSubmitEditing={() => onSubmitEditing()}
+            onChangeText={text => onChangeText(text)}
+            placeholder={'Name'}
+          />
+          <TouchableOpacity
+            onPress={() => onAddListItem()}
+            style={[styles.button, styles.menuBtn]}>
+            <Text style={styles.btnText}>Quick Add</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onAddListItem()}
+            style={[styles.button, styles.menuBtn]}>
+            <Text style={styles.btnText}>Add New</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onAddListItem()}
+            style={[styles.button, styles.menuBtn]}>
+            <Text style={styles.btnText}>Load</Text>
+          </TouchableOpacity>
+        </View>
+      ) : null}
+      <View style={styles.spacer}></View>
+      <View style={styles.combatListView}>
+        {data && (
+          <FlatList
+            data={data}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            ItemSeparatorComponent={FlatListItemSeparator}
+          />
+        )}
+      </View>
     </View>
   );
 };
@@ -213,7 +289,19 @@ const App: () => Node = () => {
 export default App;
 
 const styles = StyleSheet.create({
-  titleText: {marginLeft: 60},
+  listSeparator: {
+    height: 1,
+    width: '100%',
+    backgroundColor: '#000',
+  },
+  combatListView: {
+    flex: 2,
+    alignItems: 'stretch',
+    borderColor: 'green',
+    borderWidth: 4,
+  },
+  spacer: {flex: 1},
+  titleText: {fontSize: 16, fontWeight: 'bold'},
   combatMenu: {
     flex: 1,
     justifyContent: 'space-around',
@@ -224,10 +312,11 @@ const styles = StyleSheet.create({
   combatBtn: {height: 30, margin: 10, padding: 2},
   combatControls: {flexDirection: 'row', justifyContent: 'flex-end'},
   menuBtn: {
+    flex: 1,
     margin: 5,
     height: 30,
     padding: 0,
-    width: 75,
+    // width: 75,
   },
   buttonView: {
     flex: 1,
@@ -251,8 +340,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#aaa77e',
     borderRadius: 3,
   },
-  itemView: {flexDirection: 'row', justifyContent: 'space-between'},
-  textInput: {width: 100},
+  itemView: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // borderColor: 'gold',
+    // borderWidth: 2,
+  },
+  textInput: {flex: 1, margin: 10, backgroundColor: '#bbb'},
   iconSVG: {width: 20, height: 20, marginRight: 10},
   container: {
     flex: 1,
